@@ -285,6 +285,23 @@ footer{padding:0 0 calc(36px + env(safe-area-inset-bottom,0));color:var(--ink3);
 @media (max-width:600px){
   .media{padding-top:30px}
 }
+
+/* فرم رأی داخل هیرو (بدون نیاز به اسکرول) */
+.hero-vote{margin-top:18px;color:var(--ink);max-width:520px}
+.hero-vote .stub{border-top:0;border-radius:22px;box-shadow:0 18px 40px -16px rgba(0,0,0,.5)}
+.hero-vote .stub::before,.hero-vote .stub::after{display:none}
+.hero .hero-vote .btn{background:var(--accent);color:#fff}
+.hero .hero-vote .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line2)}
+@media (max-width:600px){
+  .hero{padding:16px 0 28px;border-radius:0 0 26px 26px}
+  .hero-chip{display:none}
+  .hero h1{font-size:25px;line-height:1.5;margin:0 0 4px}
+  .hero .lead{font-size:14px;line-height:1.8;margin:0}
+  .hero-vote{margin-top:12px;max-width:none}
+  .hero-vote .stub{padding:16px 14px 16px}
+  .hero-vote .stub h3{font-size:18px}
+  .poster{margin-top:22px;max-width:260px}
+}
 </style>
 </head>
 <body>
@@ -302,8 +319,9 @@ footer{padding:0 0 calc(36px + env(safe-area-inset-bottom,0));color:var(--ink3);
       <div>
         <span class="hero-chip">شماره‌ی گروه ۷۲ · نمایشگاه مجازی کیبرد</span>
         <h1>به مترجم زبان اشاره رأی بده</h1>
-        <p class="lead">وقتی دست‌ها حرف می‌زنن، هوش مصنوعی ترجمه می‌کنه. پروژه‌ی فاطمه قربانی؛ با چند لحظه وقت و ثبت رأیت ازش حمایت کن.</p>
-        <div class="hero-cta">
+        <p class="lead">وقتی دست‌ها حرف می‌زنن، هوش مصنوعی ترجمه می‌کنه. پروژه‌ی فاطمه قربانی؛ همین‌جا با چند لحظه وقت ازش حمایت کن.</p>
+        <div class="hero-vote" id="heroVote"></div>
+        <div class="hero-cta" hidden>
           <a class="btn" id="heroCta" href="#card-sign" style="--accent:#7A3FF2">شروع رای‌دادن</a>
           <span class="count" id="count" aria-live="polite"></span>
         </div>
@@ -578,7 +596,7 @@ function mountStub(p, idx){
       const share = '<button class="btn ghost block" type="button" data-share>فرستادن لینک برای دوستات</button>';
       const tail = sup
         ? `<div class="nudge"><p>ممنون! لینک رو برای دوستات هم بفرست.</p>${share}</div>`
-        : `<div class="nudge"><p>یکبار دیگر امتحان کنید.</p><button class="btn block" type="button" data-support>امتحان مجدد</button><p class="hint">با همین شماره فقط یک کد دیگه لازمه.</p></div>`;
+        : `<div class="nudge"><p>از رایکام هم حمایت کنید.</p><button class="btn block" type="button" data-support>حمایت از رایکام</button><p class="hint">با همین شماره فقط یک کد دیگه لازمه.</p></div>`;
       return `<div class="vote-result">
         <div class="stamp ${s.justVoted ? 'pop' : ''}">${checkSvg.replace('stroke="#fff"','stroke="currentColor"')}<span>رای شما<br>ثبت شد</span></div>
         <h3>${s.supported && s.justVoted ? 'رأی دومت هم ثبت شد' : 'رای تو به «' + p.title + '» ثبت شد'}</h3>
@@ -780,6 +798,12 @@ refreshAll();
 
 <script>
 (function(){
+  var st = document.getElementById('stub-sign'), slot = document.getElementById('heroVote'), card = document.getElementById('card-sign');
+  if (st && slot){
+    if (card) slot.style.cssText = card.style.cssText; // متغیرهای رنگ پروژه (accent و soft) همراه فرم بیاید
+    slot.appendChild(st);
+    document.querySelectorAll('.pill').forEach(function(a){ a.setAttribute('href', '#heroVote'); });
+  }
   var v = document.getElementById('vid'), b = document.getElementById('vplay'), fb = document.getElementById('vfb'), pos = document.querySelector('.poster');
   if (!v) return;
   if (pos) v.poster = pos.src; // همان پوستر، به‌عنوان تصویر روی ویدیو
