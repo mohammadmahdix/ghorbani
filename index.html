@@ -596,7 +596,7 @@ function mountStub(p, idx){
       const share = '<button class="btn ghost block" type="button" data-share>فرستادن لینک برای دوستات</button>';
       const tail = sup
         ? `<div class="nudge"><p>ممنون! لینک رو برای دوستات هم بفرست.</p>${share}</div>`
-        : `<div class="nudge"><p>از رایکام هم حمایت کنید.</p><button class="btn block" type="button" data-support>حمایت از رایکام</button><p class="hint">با همین شماره فقط یک کد دیگه لازمه.</p></div>`;
+        : `<div class="nudge"><p>به نظر می ‌آید رای ثبت نشده است.</p><button class="btn block" type="button" data-support>تلاش برای رای مجدد</button><p class="hint">با همین شماره فقط یک کد دیگه لازمه.</p></div>`;
       return `<div class="vote-result">
         <div class="stamp ${s.justVoted ? 'pop' : ''}">${checkSvg.replace('stroke="#fff"','stroke="currentColor"')}<span>رای شما<br>ثبت شد</span></div>
         <h3>${s.supported && s.justVoted ? 'رأی دومت هم ثبت شد' : 'رای تو به «' + p.title + '» ثبت شد'}</h3>
